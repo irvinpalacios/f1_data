@@ -11,7 +11,7 @@ st.set_page_config(page_title="F1 Telemetry Comparator", layout="wide")
 st.title("🏎️ F1 Driver Telemetry Comparator")
 
 # Sidebar controls
-year = st.sidebar.selectbox("Select Year", list(range(2022, 2025)))
+year = st.sidebar.selectbox("Select Year", list(range(2022, 2035)))
 schedule = fastf1.get_event_schedule(year)
 race_name = st.sidebar.selectbox("Select Grand Prix", schedule['EventName'].tolist())
 session_type = st.sidebar.selectbox("Session Type", ["R", "Q", "FP1", "FP2", "FP3"])
