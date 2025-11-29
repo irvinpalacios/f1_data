@@ -12,7 +12,8 @@ st.title("🏎️ F1 Driver Telemetry Comparator")
 
 # Sidebar controls
 year = st.sidebar.selectbox("Select Year", list(range(2018, 2024)))
-race_name = st.sidebar.selectbox("Select Grand Prix", fastf1.events.get_event_names(year))
+schedule = fastf1.get_event_schedule(year)
+race_name = st.sidebar.selectbox("Select Grand Prix", schedule['EventName'].tolist())
 session_type = st.sidebar.selectbox("Session Type", ["R", "Q", "FP1", "FP2", "FP3"])
 
 load_button = st.sidebar.button("Load Session")
