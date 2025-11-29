@@ -21,19 +21,25 @@ load_button = st.sidebar.button("Load Session")
 if load_button:
     with st.spinner("Loading session data..."):
         try:
-            event = fastf1.get_event(year, race_name)
-            session = event.get_session(session_type)
+            event_row = schedule[schedule['EventName'] == race_name].iloc[0]
+            round_number = int(event_row['RoundNumber'])
+
+            session = fastf1.get_session(year, round_number, session_type)
             session.load()
+
+            st.session_state['session'] = session  # <-- IMPORTANT
         except Exception as e:
             st.error(f"Error loading session: {e}")
             st.stop()
 
     st.success("Session Loaded!")
 
-    # List drivers in the session
-    drivers = session.drivers
-    driver_info = session.results
 
+    # List drivers in the session
+if 'session' in st.session_state:
+    session = st.session_state['session']
+
+    drivers = session.drivers
     driver1 = st.selectbox("Select Driver 1", drivers)
     driver2 = st.selectbox("Select Driver 2", drivers)
 
